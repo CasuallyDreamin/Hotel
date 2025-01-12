@@ -33,6 +33,7 @@ class hotel:
         dest_floor.data[num] = room(floor, num, beds)
     
     def remove_room(self, room_ID:str):
+        
         try:
             col = int(room_ID[-2])
             row = int(room_ID[0:-2])
@@ -43,6 +44,7 @@ class hotel:
         dest_floor.data[col] = None
 
     def get_room_by_ID(self, room_ID):
+
         try:
             col = int(room_ID[-2])
             row = int(room_ID[0:-2])
@@ -51,8 +53,3 @@ class hotel:
         
         dest_floor:arr = self.rooms.data.data[row-1]
         return dest_floor.data[col]
-
-
-myhotel = hotel()
-myhotel.add_room(1,1,1)
-myhotel.show_2D()
