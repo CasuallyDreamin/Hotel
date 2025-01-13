@@ -34,7 +34,7 @@ class arr:
 
         return True
 
-    def add_at_index(self, index, data):
+    def insert(self, index:int, data):
         
         temp_index = self.index_ptr
 
@@ -58,7 +58,7 @@ class arr:
         
         return True
 
-    def remove_by_index(self, index):
+    def remove_by_index(self, index:int):
         
         if index >= self.size or index < 0:
             return "Out of index"
@@ -79,7 +79,7 @@ class arr:
                 self.remove_by_index(i)
                 return True
         
-        return "data does not exist"
+        return False
     
     def show_all(self):
         
@@ -100,6 +100,9 @@ class arr:
         self.size = new_size
 
         return True
+    
+    def get_by_index(self, idx):
+        return self.data[idx]
 
 def copy_arr(source:list, destination:list):
     

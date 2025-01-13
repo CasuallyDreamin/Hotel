@@ -9,12 +9,13 @@ class hotel:
 
     def show_2D(self):
         image = ""
-        for floor in self.rooms.data.data:
+        for i in range(self.floors):
             flr = ""
-            for room in floor.data:
-                if room is None: flr += "O"
+            for j in range(10):
+                temp = self.rooms.get_by_row_col(i,j)
+                if temp is None: flr += "O"
                 else: flr += "R"
-            image = flr + '\n' + image 
+            image = flr + '\n' + image
 
         print(image)
     
@@ -28,28 +29,33 @@ class hotel:
 
         if beds < 1 or beds > 5:
             return "invalid number of beds"
-
-        dest_floor:arr = self.rooms.data.data[floor-1]
-        dest_floor.data[num] = room(floor, num, beds)
+        
+        if self.rooms.get_by_row_col(floor, num) != None:
+            return 'room already exists.'
+        
+        self.rooms.insert_at_row_col(floor, num, room(floor, num, beds))
     
     def remove_room(self, room_ID:str):
         
         try:
-            col = int(room_ID[-2])
-            row = int(room_ID[0:-2])
+            floor = int(room_ID[0:-2])
+            num = int(room_ID[-1])
         except:
             return "Invalid room_ID"
         
-        dest_floor:arr = self.rooms.data.data[row-1]
-        dest_floor.data[col] = None
+        self.rooms.insert_at_row_col(floor, num, None)
 
-    def get_room_by_ID(self, room_ID):
+    def get_room_by_ID(self, room_ID:str):
 
         try:
-            col = int(room_ID[-2])
-            row = int(room_ID[0:-2])
+            floor = int(room_ID[0:-2])
+            num = int(room_ID[-1])
         except:
             return "Invalid room_ID"
         
-        dest_floor:arr = self.rooms.data.data[row-1]
-        return dest_floor.data[col]
+        return self.rooms.get_by_row_col(floor-1,num)
+    
+m = hotel(4)
+m.add_room(1,1,1)
+print(m.get_room_by_ID('111'))
+m.show_2D()
