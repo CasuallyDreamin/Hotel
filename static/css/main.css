@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: whitesmoke;
+}
+
+body * {
+    display:flex;
+    justify-content: center;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color:#282926;
+    color:#d6c1ff;
+    border: 0;
+}
+button:hover {
+    background-color:#3c3d3a;
+    color:#d6c1ff;
+}
+#sign-in-up {
+    display: flex;
+    gap: 10px;
+}

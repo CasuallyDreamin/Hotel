@@ -1,11 +1,11 @@
-from ds import TwoDArr
+from ds import TwoDArr, queue
 from room import room
 from arr import arr
-
 class hotel:
     def __init__(self, floors:int = 3):
         self.floors = floors
         self.rooms = TwoDArr(floors, 10)
+        self.to_clean = queue()
 
     def show_2D(self):
         image = ""
