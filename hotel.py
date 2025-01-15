@@ -1,11 +1,13 @@
-from ds import TwoDArr, queue
+from ds import TwoDArr, queue, hashtable
 from room import room
 
 class hotel:
-    def __init__(self, floors:int = 3):
+    def __init__(self, floors:int = 3, years = 1):
         self.floors = floors
-        self.rooms = TwoDArr(floors, 10)
-        self.to_clean = queue()
+        self.rooms: TwoDArr = TwoDArr(floors, 10)
+        self.to_clean: queue = queue()
+        self.history: TwoDArr = TwoDArr(years, 365)
+        self.users: hashtable = hashtable(100)
 
     def show_2D(self):
         image = ""
@@ -50,10 +52,11 @@ class hotel:
         try:
             floor = int(room_ID[0:-2])
             num = int(room_ID[-1])
+        
         except:
             return "Invalid room_ID"
         
-        return self.rooms.get_by_row_col(floor,num)
+        return self.rooms.get_by_row_col(floor, num)
     
 m = hotel(4)
 m.add_room(1,1,1)
