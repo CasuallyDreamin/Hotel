@@ -1,74 +1,29 @@
 class arr:
     def __init__(self, size:int = 1):
+        
         if size <= 0:
             return "Invalid size input"
         
         self.size = size
-        self.index_ptr = 0
         self.data:list = self.size * [None]
     
-    def add_first(self, data):
-        
-        temp_index = self.index_ptr
-
-        if temp_index == self.size:
-            self.expand()
-        
-        while temp_index - 1 >= 0:
-
-            self.data[temp_index] = self.data[temp_index - 1]
-            temp_index -= 1
-        
-        self.data[0] = data
-        self.index_ptr += 1
-        
-        return True
-
-    def add_last(self, data):
-        
-        if self.index_ptr == self.size:
-            self.expand()
-        
-        self.data[self.index_ptr] = data 
-        self.index_ptr += 1
-
-        return True
-
+    
     def insert(self, index:int, data):
-        
-        temp_index = self.index_ptr
 
         if index >= self.size or index < 0:
             return "Out of index"
         
-        if index == temp_index:
-            self.add_last(data)
-            return True
-        
-        if temp_index == self.size:
-            self.expand()
-
-        while temp_index - 1 >= index:
-
-            self.data[temp_index] = self.data[temp_index - 1]
-            temp_index -= 1
         
         self.data[index] = data
-        self.index_ptr += 1
         
         return True
 
     def remove_by_index(self, index:int):
         
         if index >= self.size or index < 0:
-            return "Out of index"
-        
-        while index < self.index_ptr - 1:
-            
-            self.data[index] = self.data[index + 1]
-            index += 1
+            return False
 
-        self.index_ptr -= 1
+        self.data[index] = None
 
         return True
     
@@ -103,6 +58,9 @@ class arr:
     
     def get_by_index(self, idx):
         return self.data[idx]
+    
+    def empty(self):
+        self.data = self.size * [None]
 
 def copy_arr(source:list, destination:list):
     

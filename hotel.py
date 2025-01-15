@@ -1,6 +1,6 @@
 from ds import TwoDArr, queue
 from room import room
-from arr import arr
+
 class hotel:
     def __init__(self, floors:int = 3):
         self.floors = floors
@@ -53,9 +53,9 @@ class hotel:
         except:
             return "Invalid room_ID"
         
-        return self.rooms.get_by_row_col(floor-1,num)
+        return self.rooms.get_by_row_col(floor,num)
     
 m = hotel(4)
 m.add_room(1,1,1)
-print(m.get_room_by_ID('111'))
+print(m.get_room_by_ID('111').num)
 m.show_2D()

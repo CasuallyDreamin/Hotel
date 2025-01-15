@@ -3,25 +3,19 @@ class dll_node:
         self.data = data
         self.next = None
         self.prev = None
+
 class dll:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head:dll_node = None
+        self.tail:dll_node = None
     
     def add_first(self, data):
         new_node = dll_node(data)
-
-        if self.head == None:
-            self.head = new_node
-            self.head.next = new_node
-
-            self.tail = new_node
-            self.tail.prev = new_node
-            
-            return
-        
         new_node.next = self.head
-        self.head.prev = new_node
+
+        if self.head != None:
+            self.head.prev = new_node
+        
         self.head = new_node
 
     def add_last(self, data):
