@@ -1,7 +1,7 @@
-Data structure for keeping users (hashtable)
-Add password to user class
-Make Login page
-Make Sign Up page
-Make admin panel
-Make user panel
-Make admin class in admin.py
+Data structure for keeping users (hashtable) D
+Add password to user class D
+Make Login page T (html, app.py send/get)
+Make Sign Up page T
+Make admin panel T
+Make user panel T
+Make admin class in admin.py | might be unnessesary

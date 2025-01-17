@@ -7,9 +7,11 @@
 {% block body %}
 <h1>Hormozgan University DSA Final Project</h1>
 <h1>Hotel System</h1>
+<form action="/" method="POST">
 <div id="sign-in-up">
-    <button id="create-account" type="button">Create account</button>
-    <button id="log-in" type="button">Log in</button>
+    <input type="submit" name="create-account" value="Create account">
+    <input type="submit" name="log-in" value="Login">
 </div>
+</form>
 <img style="padding-top: 10px" src="/static/images/hotel.jpg"
 {% endblock %}

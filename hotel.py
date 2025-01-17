@@ -57,8 +57,3 @@ class hotel:
             return "Invalid room_ID"
         
         return self.rooms.get_by_row_col(floor, num)
-    
-m = hotel(4)
-m.add_room(1,1,1)
-print(m.get_room_by_ID('111').num)
-m.show_2D()

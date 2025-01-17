@@ -5,8 +5,16 @@ class hotel_sys:
     
     def __init__(self, hotel = None, curr_user = None):
         self.hotel:hot = hotel
-        self.curr_user:user = None
+        self.curr_user:user = curr_user
 
+    def init_hotel(self, floor_num):
+        try:
+            self.hotel = hot(int(floor_num))
+        except:
+            return 'Invalid floor number'
+        
+        return True
+    
     def sign_up(self, username:str, password:str):
         try:
             username = int(username)
@@ -65,7 +73,7 @@ class hotel_sys:
 
         self.curr_user = new_curr_user
 
-        return "Welcome!"
+        return True
     
 
     

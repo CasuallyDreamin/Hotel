@@ -1,25 +1,62 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
+from main import hotel_sys
+from admin import admin
+
 
 app = Flask(__name__)
+h_sys = hotel_sys()
+adm = admin()
 
-@app.route("/")
+@app.route("/", methods = ['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    if h_sys.hotel == None:
+        if h_sys.curr_user != adm:
+            return redirect('/admin_login')
+        else:
+            return redirect('/admin_panel')
+        
+    if request.method == 'POST':
+        if "create-account" in request.form:
+            return redirect("/sign_up")
+        elif "log-in" in request.form:
+            return redirect("/login")
+    else:
+        return render_template('index.html')
 
-@app.route("/sign_up")
+@app.route("/sign_up", methods = ['POST', 'GET'])
 def sign_up():
+    if request.method == 'POST':
+        sign_up_result = h_sys.sign_up(request.form['username'], request.form['password'])
+        
+        if sign_up_result == True:
+            return redirect("/login")
+        else:
+            return render_template('sign_up.html', error = sign_up_result)
+        
     return render_template('sign_up.html')
 
-@app.route("/login")
+@app.route("/login", methods = ['POST', 'GET'])
 def login():
     return render_template('login.html')
 
-@app.route("/user_panel")
+@app.route("/admin_login", methods = ['POST', 'GET'])
+def admin_login():
+    if request.method == 'POST':
+        if request.form['username'] == adm.username and request.form['password']:
+            h_sys.curr_user = adm
+            return redirect('/admin_panel')
+
+    return render_template('admin_login.html')
+
+@app.route("/user_panel", methods = ['POST', 'GET'])
 def user_panel():
     return render_template('user_panel.html')
 
-@app.route("/admin_panel")
+@app.route("/admin_panel", methods = ['POST', 'GET'])
 def admin_panel():
+    if h_sys.curr_user == None:
+        return redirect("/admin_login")
+
     return render_template('admin_panel.html')
 
 if __name__ == "__main__":

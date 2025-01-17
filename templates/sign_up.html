@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block body %}
-
+<form action="/sign_up" method="POST">
+    <input type="text" name="username" value="username (national ID)">
+    <input type="text" name="password" value="password">
+    <input type="submit" name ="submit" value="sign up">
+</form>
+<p>{{error}}</p>
 {% endblock %}
