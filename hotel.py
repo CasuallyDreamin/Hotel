@@ -8,8 +8,9 @@ class hotel:
         self.to_clean: queue = queue()
         self.history: TwoDArr = TwoDArr(years, 365)
         self.users: hashtable = hashtable(100)
+        self.rooms_added = hashtable(floors*10)
 
-    def show_2D(self):
+    def get_all_rooms_str(self):
         image = ""
         for i in range(self.floors):
             flr = ""
@@ -19,7 +20,7 @@ class hotel:
                 else: flr += "R"
             image = flr + '\n' + image
 
-        print(image)
+        return image
     
     def add_room(self, floor:int, num:int, beds:int):
         

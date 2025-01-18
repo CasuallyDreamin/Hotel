@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<form action="/make_hotel" method="POST">
+    <input type="text" name="floor_number" value="Enter Number Of Floors">
+    <input type="submit" name="floor_submit" value="Create Hotel">
+</form>
+<p>{{error}}</p>
+{% endblock %}

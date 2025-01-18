@@ -5,6 +5,7 @@ class hotel_sys:
     
     def __init__(self, hotel = None, curr_user = None):
         self.hotel:hot = hotel
+        self.admin_is_logged = False
         self.curr_user:user = curr_user
 
     def init_hotel(self, floor_num):
