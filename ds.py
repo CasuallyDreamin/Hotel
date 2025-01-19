@@ -10,7 +10,7 @@ class TwoDArr:
         for i in range(rows):
             self.data.insert(i,arr(cols))
 
-    def get_row(self, idx:int):
+    def get_row(self, idx:int) -> arr:
         
         if idx not in range(0,self.rows):
             return False

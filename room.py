@@ -1,10 +1,12 @@
+from user import user
+
 class room:
     def __init__(self, floor:int, num:int, beds:int):
-        self.residency = None
+        self.residency:user = None
         self.floor = floor
         self.num = num
         self.beds = beds
-        self.ID = "{floor}" + "{beds}" + "{num}"
+        self.ID = f"{self.floor}" + f"{self.beds}" + f"{self.num}"
         self.reservation_c = 0
         self.reservation_c_since_service = 0
         self.is_available = True

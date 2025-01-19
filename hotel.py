@@ -1,26 +1,18 @@
 from ds import TwoDArr, queue, hashtable
 from room import room
+from dll import dll
 
 class hotel:
     def __init__(self, floors:int = 3, years = 1):
         self.floors = floors
-        self.rooms: TwoDArr = TwoDArr(floors, 10)
+        self.rooms: TwoDArr = TwoDArr(floors+1, 10)
         self.to_clean: queue = queue()
         self.history: TwoDArr = TwoDArr(years, 365)
         self.users: hashtable = hashtable(100)
-        self.rooms_added = hashtable(floors*10)
+        self.rooms_added:dll = dll()
 
-    def get_all_rooms_str(self):
-        image = ""
-        for i in range(self.floors):
-            flr = ""
-            for j in range(10):
-                temp = self.rooms.get_by_row_col(i,j)
-                if temp is None: flr += "O"
-                else: flr += "R"
-            image = flr + '\n' + image
-
-        return image
+    def get_all_rooms(self):
+        return self.rooms_added.get_as_list()
     
     def add_room(self, floor:int, num:int, beds:int):
         
@@ -36,7 +28,11 @@ class hotel:
         if self.rooms.get_by_row_col(floor, num) != None:
             return 'room already exists.'
         
-        self.rooms.insert_at_row_col(floor, num, room(floor, num, beds))
+        new_room = room(floor, num, beds)
+        self.rooms.insert_at_row_col(floor, num, new_room)
+        self.rooms_added.add_first(new_room)
+
+        return 'Room added.'
     
     def remove_room(self, room_ID:str):
         

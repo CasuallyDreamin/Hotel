@@ -5,5 +5,47 @@
 {% endblock %}
 
 {% block body %}
-this is admin panel
+<div id="make_room_form_header">
+    <div>floor</div>
+    <div>number in floor</div>
+    <div>number of beds</div>
+    <div>Make room</div>
+</div>
+<form action="/admin_panel" method="POST">
+    <input type="number" name="floor" value="floor">
+    <input type="number" name="number" value="number">
+    <input type="number" name="beds" value="beds">
+    <input type="submit" name="make_room" value="Add a room">
+</form>
+<div>{{make_room_error}}</div>
+<hr>
+<div>
+    <div>floor</div>
+    <div>beds</div>
+    <div>filter</div>
+</div>
+<form action="/admin_panel" method="POST">
+    <input type="number" name="filter_by_floor" value="">
+    <input type="number" name="filter_by_bed_c" value="">
+    <input type="submit" name="apply_filter" value="Apply filter">
+</form>
+<div>{{filter_error}}</div>
+<hr>
+<div id="room_info_header">
+    <div>Room ID</div>
+    <div>Residency</div>
+    <div>Service Status</div>
+    <div>Availability</div>
+</div>
+<hr>
+{% for room in rooms %}
+    {% if room != None %}
+        <div id="room_info">
+            <h2>{{room.ID}}</h2>
+            <h2>{{room.residency.username}}</h2>
+            <h2>{{room.service}}</h2>
+            <h2>{{room.is_available}}</h2>
+        </div>
+    {% endif %}
+{% endfor %}
 {% endblock %}

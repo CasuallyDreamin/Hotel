@@ -1,7 +1,3 @@
-Data structure for keeping users (hashtable) D
-Add password to user class D
-Make Login page T (html, app.py send/get)
-Make Sign Up page T
-Make admin panel T
-Make user panel T
-Make admin class in admin.py | might be unnessesary
+Show rooms in admin panel
+Make structure for reservation
+Finish Admin_panel.html and User_panel.html

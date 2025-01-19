@@ -1,7 +1,7 @@
 class arr:
     def __init__(self, size:int = 1):
         
-        if size <= 0:
+        if size < 0:
             return "Invalid size input"
         
         self.size = size
