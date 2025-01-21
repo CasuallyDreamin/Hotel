@@ -3,11 +3,10 @@ from room import room
 from dll import dll
 
 class hotel:
-    def __init__(self, floors:int = 3, years = 1):
+    def __init__(self, floors:int = 3):
         self.floors = floors
         self.rooms: TwoDArr = TwoDArr(floors+1, 10)
         self.to_clean: queue = queue()
-        self.history: TwoDArr = TwoDArr(years, 365)
         self.users: hashtable = hashtable(100)
         self.rooms_added:dll = dll()
 
@@ -44,7 +43,7 @@ class hotel:
         
         self.rooms.insert_at_row_col(floor, num, None)
 
-    def get_room_by_ID(self, room_ID:str):
+    def get_room_by_ID(self, room_ID:str)->room:
 
         try:
             floor = int(room_ID[0:-2])
@@ -54,3 +53,4 @@ class hotel:
             return "Invalid room_ID"
         
         return self.rooms.get_by_row_col(floor, num)
+    

@@ -5,5 +5,30 @@
 {% endblock %}
 
 {% block body %}
-this is user panel
+<div id="reserve_by_id_header">
+    <div>Room ID</div>
+    <div></div>
+    <div>from: year/month/day</div>
+    <div></div>
+    <div></div>
+    <div>until: year/month/day</div>
+    <div></div>
+    <div></div>
+    <div>reserve</div>
+</div>
+<form action="/admin_panel" method="POST">
+    <input type="number" name="reserve_id" value="id">
+    -
+    <input type="number" name="res_start_y" value="id">
+    <input type="number" name="res_start_m" value="id">
+    <input type="number" name="res_start_d" value="id">
+    -
+    <input type="number" name="res_end_y" value="id">
+    <input type="number" name="res_end_m" value="id">
+    <input type="number" name="res_end_d" value="id">
+    -
+    <input type="submit" name="res_by_id" value="reserve">
+</form>
+<div>{{reserve_error}}</div>
+<hr>
 {% endblock %}

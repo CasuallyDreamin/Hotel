@@ -3,7 +3,7 @@ from main import hotel_sys
 from admin import admin
 from hotel import hotel
 from dll import dll
-
+from hotel_time import hotel_date
 app = Flask(__name__)
 h_sys = hotel_sys()
 adm = admin()
@@ -86,10 +86,29 @@ def admin_login():
 @app.route("/user_panel", methods = ['POST', 'GET'])
 def user_panel():
     time = h_sys.time.time.date()
-    
-    return render_template('user_panel.html')
+    res_error=''
+    if request.method == 'POST':
+        if 'res_by_id' in request.form:
+            try:
+                start_date = hotel_date(request.form["res_start_y"],
+                                        request.form["res_start_m"],
+                                        request.form["res_start_d"])
+                
+                end_date = hotel_date(request.form["res_start_y"],
+                                        request.form["res_start_m"],
+                                        request.form["res_start_d"])
+                
+                res_error = h_sys.res_by_id(request.form['reserve_id'],
+                                            start_date,
+                                            end_date)
+            except:
+                res_error = 'Room ID cannot be empty or invalid date(s)'
 
-@app.route("/admin_panel", methods = ['POST', 'GET','filter'])
+    return render_template('user_panel.html',
+                           reserve_error = res_error,
+                            time = time)
+
+@app.route("/admin_panel", methods = ['POST', 'GET'])
 def admin_panel():
     time = h_sys.time.time.date()    
 
@@ -110,6 +129,10 @@ def admin_panel():
                                 int(request.form['beds']))
             except:
                 make_room_error = 'Please fill all 3 Fields'
+        
+        if 'change_day' in request.form:
+            h_sys.go_next_day()
+            return redirect("/admin_panel")
     
             
     rooms = h_sys.hotel.get_all_rooms().data
@@ -146,6 +169,8 @@ def admin_panel():
                         rooms = temp_rooms.get_as_list().data
                 except:
                     filter_error = 'Invalid bed value'
+
+        
 
     return render_template('admin_panel.html',
                             title = 'ADMIN PANEL',

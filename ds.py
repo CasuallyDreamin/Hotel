@@ -84,6 +84,7 @@ class hashtable:
         self.table = arr(init_size)
         self.members = 0
         self.g_t = 0.8 #growth threshold
+        self.added_data = dll()
 
     def hash(self, key:int):
         return key % self.table.size
@@ -104,7 +105,8 @@ class hashtable:
 
             else:
                 self.table.get_by_index(index).add_first(key_data(key,data))
-            
+                
+            self.added_data.add_first(data)
             self.members += 1
         
 
@@ -152,6 +154,10 @@ class hashtable:
                 while curr_node != None:
                     self.add(curr_node.data.key, curr_node.data.data)
                     curr_node = curr_node.next
+
+    def get_all_data_as_arr(self)-> arr:
+        return self.added_data.get_as_list()
+
 
 
 

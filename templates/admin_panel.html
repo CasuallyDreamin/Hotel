@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+<form action="/admin_panel" method="POST">
+    <input type="submit" name="change_day" value="Go to next day">
+</form>
+<hr>
 <div id="make_room_form_header">
     <div>floor</div>
     <div>number in floor</div>
@@ -19,7 +23,7 @@
 </form>
 <div>{{make_room_error}}</div>
 <hr>
-<div>
+<div id="filter_form_header">
     <div>floor</div>
     <div>beds</div>
     <div>filter</div>
