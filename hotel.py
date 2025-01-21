@@ -1,5 +1,5 @@
 from ds import TwoDArr, queue, hashtable
-from room import room
+from hotel_room import room
 from dll import dll
 
 class hotel:
@@ -48,9 +48,13 @@ class hotel:
         try:
             floor = int(room_ID[0:-2])
             num = int(room_ID[-1])
-        
         except:
             return "Invalid room_ID"
+        target = self.rooms.get_by_row_col(floor, num)
+
+        if target != None:
+            if target.beds != int(room_ID[-2]):
+                return None
         
-        return self.rooms.get_by_row_col(floor, num)
+        return target 
     

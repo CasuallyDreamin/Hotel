@@ -24,11 +24,13 @@
 <div>{{make_room_error}}</div>
 <hr>
 <div id="filter_form_header">
+    <div>room ID</div>
     <div>floor</div>
     <div>beds</div>
     <div>filter</div>
 </div>
 <form action="/admin_panel" method="POST">
+    <input type="number" name="room_id" value="">
     <input type="number" name="filter_by_floor" value="">
     <input type="number" name="filter_by_bed_c" value="">
     <input type="submit" name="apply_filter" value="Apply filter">

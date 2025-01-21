@@ -16,19 +16,91 @@
     <div></div>
     <div>reserve</div>
 </div>
-<form action="/admin_panel" method="POST">
-    <input type="number" name="reserve_id" value="id">
+<form action="/user_panel" method="POST">
+    <input type="number" name="reserve_id">
     -
-    <input type="number" name="res_start_y" value="id">
-    <input type="number" name="res_start_m" value="id">
-    <input type="number" name="res_start_d" value="id">
+    <input type="number" name="res_start_y" value="2025">
+    <input type="number" name="res_start_m" value="1">
+    <input type="number" name="res_start_d" value="23">
     -
-    <input type="number" name="res_end_y" value="id">
-    <input type="number" name="res_end_m" value="id">
-    <input type="number" name="res_end_d" value="id">
+    <input type="number" name="res_end_y" value="2025">
+    <input type="number" name="res_end_m" value="1">
+    <input type="number" name="res_end_d" value="24">
     -
     <input type="submit" name="res_by_id" value="reserve">
 </form>
 <div>{{reserve_error}}</div>
 <hr>
+<div>
+    <div>ID</div>
+    <div>Date</div>
+    <div>reason</div>
+</div>
+<form action="/user_panel" method="POST">
+    <input type="number" name="cancel_id">
+    -
+    <input type="number" name="cancel_year">
+    <input type="number" name="cancel_month">
+    <input type="number" name="cancel_day">
+    -
+    <input type="number" name="reason">
+    <input type="submit" name="cancel_by_id" value="Cancel reservation">
+</form>
+<div>
+    <ol>
+        <li>1.Change of plans</li>
+        <li>2.Found another place</li>
+        <li>3.Other reason</li>
+    </ol>
+</div>
+<div>{{cancel_error}}</div>
+<hr>
+<div>
+    <div>floor range: A-B</div>
+    <div></div>
+    <div>bed count</div>
+    <div>Filter</div>
+</div>
+<form action="/user_panel" method="POST">
+    <input type="number" name="room_id" value="">
+    <input type="number" name="floor_filter_start" value="">
+    <input type="number" name="floor_filter_end" value="">
+    <input type="number" name="filter_by_bed_c" value="">
+    <input type="submit" name="apply_filter" value="Apply filter">
+</form>
+<div>{{filter_error}}</div>
+<hr>
+<div>Rooms</div>
+<div>
+    <div>ID</div>
+    <div>beds</div>
+    <div>popularity</div>
+    <div>floor</div>
+</div>
+{% for room in rooms %}
+    {% if room.is_available == True %}
+    <div id="room">
+        <h2>{{room.ID}}</h2>
+        <h2>{{room.beds}}</h2>
+        <h2>{{room.reservation_c}}</h2>
+        <h2>{{room.floor}}</h2>
+    </div>
+    {% endif %}
+{% endfor %}
+<hr>
+<div>History</div>
+<div>
+    <div>ID</div>
+    <div>Date</div>
+    <div>Room</div>
+    <div>Action</div>
+</div>
+{% for record in history %}
+    <div id="record">
+        <h2>{{record.ID}}</h2>
+        <h2>{{record.record_date}}</h2>
+        <h2>{{record.room.ID}}</h2>
+        <h2>{{record.action}}</h2>
+    </div>
+{% endfor %}
 {% endblock %}

@@ -4,6 +4,9 @@ from admin import admin
 from hotel import hotel
 from dll import dll
 from hotel_time import hotel_date
+from datetime import datetime
+from ds import arr
+
 app = Flask(__name__)
 h_sys = hotel_sys()
 adm = admin()
@@ -87,16 +90,62 @@ def admin_login():
 def user_panel():
     time = h_sys.time.time.date()
     res_error=''
+    cancel_err = ''
+    filter_error = ''
+
+    rooms = h_sys.hotel.get_all_rooms().data
+    temp_rooms = dll()
+
     if request.method == 'POST':
+        if 'filter_by_floor' in request.form:
+            if request.form['floor_filter_start'] == '' or request.form['floor_filter_end'] == '':
+                pass
+            else:
+                try:
+                    filter_start = int(request.form['floor_filter_start'])
+                    filter_end = int(request.form['floor_filter_end'])
+
+                    if filter_start < 1 or filter_start > h_sys.hotel.floors:
+                        filter_error = 'Invalid floor start'
+                    elif filter_end < 1 or filter_end > h_sys.hotel.floors:    
+                        filter_error = "Invalid floor end"
+                    else:
+                        for i in range(filter_start,filter_end):
+                            temp_floor = h_sys.hotel.rooms.get_row(i).data
+                            for room in temp_floor:
+                                if room != None:
+                                    temp_rooms.add_first(room)
+                        rooms = temp_rooms.get_as_list().data
+                except:
+                    filter_error = 'Invalid filter values'
+
+            
+        if 'filter_by_bed_c' in request.form:
+            if request.form['filter_by_bed_c'] == '':
+                pass
+            else:
+                try:
+                    filter_bed_c = int(request.form['filter_by_bed_c'])
+                    if filter_bed_c < 0 or filter_bed_c > 5:
+                        filter_error = 'Invalid bed value'
+                    else:
+                        for room in rooms:
+                            if room != None:
+                                if room.beds == filter_bed_c:
+                                    temp_rooms.add_first(room)
+                        rooms = temp_rooms.get_as_list().data
+                except:
+                    filter_error = 'Invalid bed value'
+
         if 'res_by_id' in request.form:
             try:
-                start_date = hotel_date(request.form["res_start_y"],
-                                        request.form["res_start_m"],
-                                        request.form["res_start_d"])
+                start_date = hotel_date(int(request.form["res_start_y"]),
+                                        int(request.form["res_start_m"]),
+                                        int(request.form["res_start_d"]))
                 
-                end_date = hotel_date(request.form["res_start_y"],
-                                        request.form["res_start_m"],
-                                        request.form["res_start_d"])
+                end_date = hotel_date(int(request.form["res_end_y"]),
+                                        int(request.form["res_end_m"]),
+                                        int(request.form["res_end_d"]))
                 
                 res_error = h_sys.res_by_id(request.form['reserve_id'],
                                             start_date,
@@ -104,9 +153,31 @@ def user_panel():
             except:
                 res_error = 'Room ID cannot be empty or invalid date(s)'
 
+        if 'cancel_by_id' in request.form:
+            try:
+                reasons = arr(3)
+                reasons.insert(0,'change of plan')
+                reasons.insert(1,'chose another place')
+                reasons.insert(2,'other')
+                cancel_err = h_sys.cancel_by_id(int(request.form['cancel_id']),
+                                                datetime(int(request.form['cancel_year']),
+                                                         int(request.form['cancel_month']),
+                                                         int(request.form['cancel_day'])
+                                                ),
+                                                reasons.get_by_index(int(request.form['reason'])-1)
+                                                )
+            except:
+                cancel_err = 'Invalid ID or date values.'
+
+    history = h_sys.curr_user.get_history_all().data
+
     return render_template('user_panel.html',
-                           reserve_error = res_error,
-                            time = time)
+                            reserve_error = res_error,
+                            cancel_error = cancel_err,
+                            filter_error = filter_error,
+                            time = time,
+                            history = history,
+                            rooms = rooms)
 
 @app.route("/admin_panel", methods = ['POST', 'GET'])
 def admin_panel():
@@ -120,6 +191,7 @@ def admin_panel():
     
     make_room_error = ''
     filter_error = ''
+    history = h_sys.history.get_all_records().data
 
     if request.method == "POST":
         if 'make_room' in request.form:
@@ -139,6 +211,13 @@ def admin_panel():
     temp_rooms = dll()
 
     if request.method == "POST":
+        if 'room_id' in request.form:
+            if request.form['room_id'] == '':
+                pass
+            else:
+                dest_room = h_sys.hotel.get_room_by_ID(request.form['room_id'])
+                rooms = [dest_room]
+                
         if 'filter_by_floor' in request.form:
             if request.form['filter_by_floor'] == '':
                 pass
@@ -177,7 +256,8 @@ def admin_panel():
                             time = time,
                             rooms = rooms,
                             make_room_error = make_room_error,
-                            filter_error = filter_error)
+                            filter_error = filter_error,
+                            history = history)
 
 @app.route("/make_hotel", methods = ['POST', 'GET'])
 def make_hotel():

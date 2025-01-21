@@ -57,6 +57,9 @@ class arr:
         return True
     
     def get_by_index(self, idx):
+        if idx < 0 or idx > self.size:
+            return 'Out of index'
+        
         return self.data[idx]
     
     def empty(self):

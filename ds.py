@@ -6,9 +6,10 @@ class TwoDArr:
         self.rows = rows
         self.cols = cols
         self.data = arr(rows)
-        
+        self.added_data = dll()
+
         for i in range(rows):
-            self.data.insert(i,arr(cols))
+            self.data.insert(i, arr(cols))
 
     def get_row(self, idx:int) -> arr:
         
@@ -35,6 +36,10 @@ class TwoDArr:
         
         row:arr = self.get_row(row)
         row.insert(col, data)
+        self.added_data.add_first(data)
+
+    def get_all_data(self):
+        return self.added_data.get_as_list()
     
 class stack:
     def __init__(self):
@@ -90,8 +95,6 @@ class hashtable:
         return key % self.table.size
 
     def add(self, key:int, data):
-        
-        print(self.members,'|', self.table.size)
 
         if self.members / self.table.size >= self.g_t:
             self.add_with_expand(key, data)
