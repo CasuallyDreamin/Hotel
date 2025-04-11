@@ -62,7 +62,7 @@ class dll:
         
         self.size -= 1
 
-    def get_all_arr(self):
+    def get_as_list(self):
         
         curr_node = self.head
         index = 0

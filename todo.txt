@@ -1,3 +1,0 @@
-finish hotel_system reservation (check if the time gap is available, check if service is needed)
-Finish Admin_panel.html and User_panel.html
-add manual service in Admin_panel
