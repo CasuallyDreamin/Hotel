@@ -17,10 +17,12 @@ button {
     color:#d6c1ff;
     border: 0;
 }
+
 button:hover {
     background-color:#3c3d3a;
     color:#d6c1ff;
 }
+
 #sign-in-up {
     display: flex;
     gap: 10px;
